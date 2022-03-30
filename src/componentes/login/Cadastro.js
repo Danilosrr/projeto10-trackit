@@ -1,59 +1,67 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import tokenContext from '../../contextos/TokenContext';
+import UserContext from '../../contextos/TokenContext';
 import logo from "../../assets/img/logo.png"
 
-export default function Login(){
+export default function Cadastro(){
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [nome, setNome] = useState("");
+    const [foto, setFoto] = useState("");
+    
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
-    const { token, setToken } = useContext(tokenContext);
-
-
-    function efetuarLogin(event){
+    function efetuarCadastro(event){
         event.preventDefault();
-        console.log(senha,email);
+        console.log(email,nome,foto,senha);
 
         const promise = axios.post(
-            `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`,            
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`,
             {
                 email: `${email}`,
-                password: `${senha}`,
+                name: `${nome}`,
+                image: `${foto}`,
+                password: `${senha}`
             }
         );
+
         promise.then((response)=>{
-            setToken(response.data.token);
-            console.log(token);
-            alert("sucesso");
+            setUser(response.data);
+            console.log(response);
+            navigate("/");
         });
         promise.catch((error)=>{
             console.log(error.response)
         });
+
     }
 
     return(
         <>
-            <PaginaLogin>
+            <PaginaCadastro>
                 <img src={logo} alt="logo"/>
                 <h1>TrackIt</h1>
-                <form onSubmit={efetuarLogin}>
+                <form onSubmit={efetuarCadastro}>
                     <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)}/>
-                    <input type="submit" value='Entrar' id='enviarLogin'/>
+                    <input type="text" placeholder='nome' id='nome' value={nome} onChange={(e)=>setNome(e.target.value)}/>
+                    <input type="url" placeholder='foto' id='foto' value={foto} onChange={(e)=>setFoto(e.target.value)}/>
+                    <input type="submit" value='Cadastrar' id='enviarCadastro'/>
                 </form>    
-                <Link to={`/Cadastro`}>
-                   <h3>Não tem uma conta? Cadastre-se!</h3>
+                <Link to={`/`}>
+                   <h3>Já tem uma conta? faça login!</h3>
                 </Link>
-            </PaginaLogin>
+            </PaginaCadastro>
         </>
     )
 }
 
-const PaginaLogin=styled.div`
+const PaginaCadastro=styled.div`
     box-sizing: border-box;
     position: fixed;
     top: 0;
@@ -82,7 +90,7 @@ const PaginaLogin=styled.div`
         border-radius: 5px;
         font-size: 21px;
     }
-    #enviarLogin{
+    #enviarCadastro{
         background-color: #52B6FF;
         color: #FFFFFF;
     }
