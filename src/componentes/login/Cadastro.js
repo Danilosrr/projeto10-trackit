@@ -3,8 +3,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 
-import UserContext from '../../contextos/TokenContext';
-import logo from "../../assets/img/logo.png"
+import loadingContext from '../../contextos/LoadingContext';
+import BotaoCarregando from './BotaoCarregando';
+import logo from "../../assets/img/logo.png";
 
 export default function Cadastro(){
 
@@ -12,13 +13,13 @@ export default function Cadastro(){
     const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
     const [foto, setFoto] = useState("");
-    
-    const { setUser } = useContext(UserContext);
+    const { loading, setLoading } = useContext(loadingContext);
+
     const navigate = useNavigate();
 
     function efetuarCadastro(event){
         event.preventDefault();
-        console.log(email,nome,foto,senha);
+        setLoading(true);
 
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`,
@@ -31,12 +32,14 @@ export default function Cadastro(){
         );
 
         promise.then((response)=>{
-            setUser(response.data);
             console.log(response);
+            setLoading(false);
             navigate("/");
         });
         promise.catch((error)=>{
             console.log(error.response)
+            setLoading(false);
+            alert("Falha no cadastro")
         });
 
     }
@@ -47,11 +50,14 @@ export default function Cadastro(){
                 <img src={logo} alt="logo"/>
                 <h1>TrackIt</h1>
                 <form onSubmit={efetuarCadastro}>
-                    <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                    <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)}/>
-                    <input type="text" placeholder='nome' id='nome' value={nome} onChange={(e)=>setNome(e.target.value)}/>
-                    <input type="url" placeholder='foto' id='foto' value={foto} onChange={(e)=>setFoto(e.target.value)}/>
-                    <input type="submit" value='Cadastrar' id='enviarCadastro'/>
+                    <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)} disabled={loading}/>
+                    <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)} disabled={loading}/>
+                    <input type="text" placeholder='nome' id='nome' value={nome} onChange={(e)=>setNome(e.target.value)} disabled={loading}/>
+                    <input type="url" placeholder='foto' id='foto' value={foto} onChange={(e)=>setFoto(e.target.value)} disabled={loading}/>
+                    {loading?
+                        <BotaoCarregando/>   
+                        :<input type="submit" value='Cadastrar' id='enviarCadastro'/>
+                    }
                 </form>    
                 <Link to={`/`}>
                    <h3>Já tem uma conta? faça login!</h3>

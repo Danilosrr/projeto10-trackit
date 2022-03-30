@@ -3,17 +3,22 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import loadingContext from '../../contextos/LoadingContext';
 import tokenContext from '../../contextos/TokenContext';
-import logo from "../../assets/img/logo.png"
+
+import BotaoCarregando from './BotaoCarregando';
+import logo from "../../assets/img/logo.png";
+
 
 export default function Login(){
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-
+    
     const { token, setToken } = useContext(tokenContext);
+    const { loading, setLoading } = useContext(loadingContext);
 
-
+    function vazio(){}
     function efetuarLogin(event){
         event.preventDefault();
         console.log(senha,email);
@@ -25,13 +30,17 @@ export default function Login(){
                 password: `${senha}`,
             }
         );
+        setLoading(true);
+
         promise.then((response)=>{
             setToken(response.data.token);
-            console.log(token);
-            alert("sucesso");
+            setLoading(false);
+            alert("Sucesso");
         });
         promise.catch((error)=>{
-            console.log(error.response)
+            console.log(error.response);
+            setLoading(false);
+            alert("Falha no login");
         });
     }
 
@@ -40,11 +49,15 @@ export default function Login(){
             <PaginaLogin>
                 <img src={logo} alt="logo"/>
                 <h1>TrackIt</h1>
-                <form onSubmit={efetuarLogin}>
-                    <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                    <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)}/>
-                    <input type="submit" value='Entrar' id='enviarLogin'/>
-                </form>    
+                <form onSubmit={loading?vazio:efetuarLogin}>
+                    <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)} disabled={loading}/>
+                    <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)} disabled={loading}/>
+                    {loading?
+                        <BotaoCarregando/>   
+                        :<input type="submit" value='Entrar' id='enviarLogin'/>
+                    }
+                </form> 
+                
                 <Link to={`/Cadastro`}>
                    <h3>Não tem uma conta? Cadastre-se!</h3>
                 </Link>
