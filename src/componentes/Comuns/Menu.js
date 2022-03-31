@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
@@ -5,26 +6,34 @@ export default function Menu(){
     return(
         <PaginaMenu>
             <div className='botoes'>
-                <h2>Hábitos</h2>
-                <h2>Histórico</h2>
+                <Link to={"/habitos"}>
+                    <h2>Hábitos</h2>
+                </Link>
+                <Link to={"/historico"}>
+                    <h2>Histórico</h2>
+                </Link> 
             </div>
+
             <div className='contador'>
-                <CircularProgressbarWithChildren value={70} text={'hoje'} background={true} backgroundPadding={6} styles={{
-                    text: {
+                <Link to={"/hoje"}>
+                    <CircularProgressbarWithChildren value={70} text={'hoje'} background={true} backgroundPadding={6} styles={{
+                        text: {
                         fill: '#FFFFFF',
                         fontSize: '24px',
-                    },
-                    background: {
+                        },
+                        background: {
                         fill: '#52B6FF',
-                      },
-                    path: {
+                        },
+                        path: {
                         stroke: '#FFFFFF',
-                    },
-                    trail: {
-                        stroke: '#52B6FF'
-                    }
-                }}/>    
+                        },
+                        trail: {
+                        stroke: '#52B6FF'    
+                        }
+                    }}/>  
+                </Link>
             </div>
+           
         </PaginaMenu>
     )
 }
@@ -58,5 +67,8 @@ const PaginaMenu=styled.footer`
         bottom: 10px;
         width: 90px;
         height: 90px;
+    }
+    a{
+        text-decoration: none;
     }
 `

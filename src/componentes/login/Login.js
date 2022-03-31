@@ -72,6 +72,7 @@ export default function Login(){
 
 const PaginaLogin=styled.div`
     box-sizing: border-box;
+    background-color: #FFFFFF;
     position: fixed;
     top: 0;
     bottom: 0;

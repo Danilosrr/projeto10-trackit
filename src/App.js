@@ -6,10 +6,11 @@ import LoadingContext from "./contextos/LoadingContext";
 import Login from "./componentes/login/Login"
 import Cadastro from "./componentes/login/Cadastro";
 import Hoje from "./componentes/habitos/Hoje";
+import Habitos from "./componentes/habitos/Habitos";
 
 import "./assets/css/reset.css";
 import "./assets/css/fonts.css";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 import 'react-circular-progressbar/dist/styles.css';
 
 export default function App(){
@@ -27,6 +28,7 @@ export default function App(){
                         <Route path="/" element={<Login/>}/>
                         <Route path="/cadastro" element={<Cadastro/>}/>
                         <Route path="/hoje" element={<Hoje/>}/>
+                        <Route path="/habitos" element={<Habitos/>}/>
                         
                     </Routes>
                 </BrowserRouter>
