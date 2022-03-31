@@ -1,31 +1,36 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import TokenContext from "./contextos/TokenContext";
+import UserContext from "./contextos/UserContext";
 import LoadingContext from "./contextos/LoadingContext";
 
 import Login from "./componentes/login/Login"
 import Cadastro from "./componentes/login/Cadastro";
+import Hoje from "./componentes/habitos/Hoje";
+
 import "./assets/css/reset.css";
 import "./assets/css/fonts.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import 'react-circular-progressbar/dist/styles.css';
 
 export default function App(){
 
     const [token, setToken] = useState(null)
+    const [image, setImage] = useState(null)
     const [loading,setLoading] = useState(false)
 
     return(
         <LoadingContext.Provider value={{loading,setLoading}}>
-            <TokenContext.Provider value={{token,setToken}}>
+            <UserContext.Provider value={{token,setToken,image,setImage}}>
                 <BrowserRouter>
                     <Routes>
                     
                         <Route path="/" element={<Login/>}/>
-                        <Route path="/Cadastro" element={<Cadastro/>}/>
-
+                        <Route path="/cadastro" element={<Cadastro/>}/>
+                        <Route path="/hoje" element={<Hoje/>}/>
+                        
                     </Routes>
                 </BrowserRouter>
-            </TokenContext.Provider>
+            </UserContext.Provider>
         </LoadingContext.Provider>
     )
 }

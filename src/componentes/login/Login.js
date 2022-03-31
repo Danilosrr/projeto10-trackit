@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import loadingContext from '../../contextos/LoadingContext';
-import tokenContext from '../../contextos/TokenContext';
+import UserContext from '../../contextos/UserContext';
 
 import BotaoCarregando from './BotaoCarregando';
 import logo from "../../assets/img/logo.png";
@@ -15,8 +15,10 @@ export default function Login(){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     
-    const { token, setToken } = useContext(tokenContext);
+    const { setToken,setImage } = useContext(UserContext);
     const { loading, setLoading } = useContext(loadingContext);
+
+    const navigate = useNavigate();
 
     function vazio(){}
     function efetuarLogin(event){
@@ -34,8 +36,10 @@ export default function Login(){
 
         promise.then((response)=>{
             setToken(response.data.token);
+            setImage(response.data.image)
             setLoading(false);
-            alert("Sucesso");
+            console.log(response);
+            navigate("/hoje");
         });
         promise.catch((error)=>{
             console.log(error.response);
@@ -58,7 +62,7 @@ export default function Login(){
                     }
                 </form> 
                 
-                <Link to={`/Cadastro`}>
+                <Link to={`/cadastro`}>
                    <h3>Não tem uma conta? Cadastre-se!</h3>
                 </Link>
             </PaginaLogin>
