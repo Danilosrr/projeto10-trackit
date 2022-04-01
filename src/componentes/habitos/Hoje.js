@@ -47,9 +47,9 @@ export default function Hoje(){
 
 const PaginaHoje = styled.section`
     background-color: #E5E5E5;
-    padding: 15px 15px 80px 15px;
+    padding: 0 15px 80px 15px;
     display: flex;
     flex-wrap: wrap;
     overflow-y: scroll;
-    height: 80%;
+    height: 67vh;
 `
