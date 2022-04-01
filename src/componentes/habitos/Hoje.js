@@ -1,7 +1,9 @@
 import {useContext,useEffect } from "react";
 import axios from "axios";
-import UserContext from '../../contextos/UserContext';
 import styled from "styled-components";
+
+import UserContext from '../../contextos/UserContext';
+import loadingContext from "../../contextos/LoadingContext";
 
 import Topo from "../Comuns/Topo";
 import Menu from "../Comuns/Menu";
@@ -11,6 +13,8 @@ import DiaAtual from "./DiaAtual";
 export default function Hoje(){
 
     const { token,image,habitosHoje,setHabitosHoje } = useContext(UserContext);
+    const { loading } = useContext(loadingContext);
+
 
     useEffect(()=>{
         const userToken = {
@@ -27,7 +31,7 @@ export default function Hoje(){
         promise.catch(error => 
             console.log(error.response)
         );
-    }, [token,setHabitosHoje]);
+    }, [token,setHabitosHoje,loading]);
     
 
     return(
@@ -37,7 +41,7 @@ export default function Hoje(){
             <PaginaHoje>
                 {habitosHoje.length<=0?
                     <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>:
-                    habitosHoje.map(habito=><HabitoHoje key={habito.id} nome={habito.name} feito={habito.done}/>)
+                    habitosHoje.map(habito=><HabitoHoje key={habito.id} id={habito.id} nome={habito.name} feito={habito.done}/>)
                 }
             </PaginaHoje>
             <Menu lista={habitosHoje}/>

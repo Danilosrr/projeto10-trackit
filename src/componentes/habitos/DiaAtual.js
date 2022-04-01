@@ -17,9 +17,9 @@ export default function DiaAtual(props){
     let percentagem = percentage(lista);
 
     return(
-        <DivDiaAtual>
+        <DivDiaAtual valor={percentagem}>
             <h2 className="diaAtual">Dia, 17/05</h2>
-            <h3 className="porcentagem">{`${percentagem}% dos hábitos concluídos`}</h3>
+            <h3 className="porcentagem">{percentagem===0||isNaN(percentagem)?'Nenhum hábito concluído ainda':`${percentagem}% dos hábitos concluídos`}</h3>
         </DivDiaAtual>
     )
 }
@@ -36,7 +36,7 @@ const DivDiaAtual=styled.section`
     }
     .porcentagem{
         font-family: 'Lexend Deca', sans-serif;
-        color: #8FC549;
+        color: ${props=>props.valor<=0?'#BABABA':'#8FC549'};
         font-size: 18px;
     }
 `
