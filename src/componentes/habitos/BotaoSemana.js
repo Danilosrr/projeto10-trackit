@@ -11,7 +11,7 @@ export default function BotaoSemana(props){
 
         if (array.includes(numero)){
             let index = array.indexOf(numero);
-            array.splice(index,1);    
+            array.splice(index+1,1);    
         }else{
             array.push(numero);
         };
@@ -23,7 +23,7 @@ export default function BotaoSemana(props){
         <BotaoDia marcado={selecionado} onClick={()=>{
             setSelecionado(!selecionado);
             criarLista(num);
-            console.log(diasSelecionados)
+            console.log(diasSelecionados);
             }}>
             {dia[0].toUpperCase()}
         </BotaoDia>

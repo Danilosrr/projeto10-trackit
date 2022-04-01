@@ -27,7 +27,7 @@ export default function Hoje(){
         promise.catch(error => 
             console.log(error.response)
         );
-    }, [token]);
+    }, [token,setHabitosHoje]);
     
 
     return(
@@ -49,6 +49,8 @@ const PaginaHoje = styled.section`
     background-color: #E5E5E5;
     padding: 0 15px 80px 15px;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     flex-wrap: wrap;
     overflow-y: scroll;
     height: 67vh;

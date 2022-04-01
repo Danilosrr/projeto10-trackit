@@ -1,14 +1,45 @@
+import axios from "axios";
+import { useContext } from "react";
 import styled from "styled-components"
+
+import UserContext from '../../contextos/UserContext';
+import loadingContext from "../../contextos/LoadingContext";
+
 import {Trash} from "react-ionicons";
 
 export default function MeuHabito(props){
-    const{nome,dias}=props
+    const{nome,dias,id}=props;
+
+    const { token } = useContext(UserContext);
+    const { setLoading } = useContext(loadingContext);
+
+    function deletarHabito(habitoId){
+
+        const userToken = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitoId}`, userToken);
+        setLoading(true);
+
+        promise.then((response)=>{
+            console.log(response);
+            setLoading(false);
+            alert("habito deletado");
+        });
+        promise.catch((error)=>{
+            console.log(error.response);
+            setLoading(false);
+        });
+    }
 
     return(
         <DivMeuHabito className="habitoApi">
             <div className="botoesHabito">
                 <h3>{nome}</h3>
-                <Trash
+                <Trash onClick={
+                    ()=>deletarHabito(id)
+                    }
                     color={'#666666'} 
                     height="13x"
                     width="15px"

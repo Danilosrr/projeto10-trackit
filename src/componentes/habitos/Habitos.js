@@ -20,7 +20,7 @@ export default function Habitos(){
     
     useEffect(()=>{
         const userToken = {
-        headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         };
 
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", userToken);
@@ -46,7 +46,7 @@ export default function Habitos(){
                 <ListaHabitos>
                     {meusHabitos.length<=0?
                         <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>:
-                        meusHabitos.map(habito=><MeuHabito key={habito.id} nome={habito.name} dias={habito.days}/>)
+                        meusHabitos.map(habito=><MeuHabito key={habito.id} id={habito.id} nome={habito.name} dias={habito.days}/>)
                     }
                 </ListaHabitos>
             </PaginaHabitos>
@@ -91,8 +91,11 @@ const PaginaHabitos = styled.section`
 `
 const ListaHabitos = styled.section`
     display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
     flex-wrap: wrap;
     overflow-y: scroll;
+    width: 100%;
     height: 90%;
     padding-bottom: 40px;
 `
