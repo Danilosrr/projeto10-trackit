@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useContext } from "react"
 import axios from "axios";
 import styled from "styled-components"
 import BotaoSemana from "./BotaoSemana"

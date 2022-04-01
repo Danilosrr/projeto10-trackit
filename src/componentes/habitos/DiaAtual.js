@@ -1,7 +1,11 @@
 import styled from "styled-components";
+import dayjs from "dayjs";
+import 'dayjs/locale/pt-br'
 
 export default function DiaAtual(props){
     const {lista} = props
+    console.log(dayjs());
+    dayjs.locale('pt-br');
 
     function percentage(array){
         let count=0;
@@ -18,7 +22,7 @@ export default function DiaAtual(props){
 
     return(
         <DivDiaAtual valor={percentagem}>
-            <h2 className="diaAtual">Dia, 17/05</h2>
+            <h2 className="diaAtual">{(`${dayjs().format('dddd, DD/MM')}`)}</h2>
             <h3 className="porcentagem">{percentagem===0||isNaN(percentagem)?'Nenhum hábito concluído ainda':`${percentagem}% dos hábitos concluídos`}</h3>
         </DivDiaAtual>
     )
