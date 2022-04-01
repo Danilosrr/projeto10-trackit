@@ -1,14 +1,16 @@
-import {useContext,useEffect,useState } from "react";
+import {useContext,useEffect } from "react";
 import axios from "axios";
 import UserContext from '../../contextos/UserContext';
-import styled from "styled-components"
+import styled from "styled-components";
+
 import Topo from "../Comuns/Topo";
 import Menu from "../Comuns/Menu";
+import HabitoHoje from "./HabitoHoje";
+import DiaAtual from "./DiaAtual";
 
 export default function Hoje(){
 
-    const { token,image } = useContext(UserContext);
-    const[habitos,setHabitos] = useState("")
+    const { token,image,habitosHoje,setHabitosHoje } = useContext(UserContext);
 
     useEffect(()=>{
         const userToken = {
@@ -19,7 +21,7 @@ export default function Hoje(){
 
         promise.then(response => {
             console.log(response);
-            setHabitos(response.data);
+            setHabitosHoje(response.data);
 
         });
         promise.catch(error => 
@@ -27,29 +29,27 @@ export default function Hoje(){
         );
     }, [token]);
     
-    
 
     return(
         <>
             <Topo src={image}/>
+            <DiaAtual lista={habitosHoje}/>
             <PaginaHoje>
-                <h2>Habito de hoje</h2>
-                <h2>Habito de hoje</h2>
-                <h2>Habito de hoje</h2>
-                <h2>Habito de hoje</h2>
-                <h2>Habito de hoje</h2>
-                {habitos.length<=0?
+                {habitosHoje.length<=0?
                     <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>:
-                    habitos.map(habito=><h2>habito da api</h2>)
+                    habitosHoje.map(habito=><HabitoHoje key={habito.id} nome={habito.name} feito={habito.done}/>)
                 }
             </PaginaHoje>
-            <Menu/>
+            <Menu lista={habitosHoje}/>
         </>
     )
 }
 
 const PaginaHoje = styled.section`
-    margin-top: 80px;
-    margin-bottom: 80px;
-    background-color: lightgray;
+    background-color: #E5E5E5;
+    padding: 15px 15px 80px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 80%;
 `

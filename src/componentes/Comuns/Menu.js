@@ -2,7 +2,22 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
-export default function Menu(){
+export default function Menu(props){
+    const {lista} = props
+
+    function percentage(array){
+        let count=0;
+        for(let i=0;i<array.length;i++){
+            if(array[i].done===true){
+                count+=1
+            }
+        };
+        let valor = (count/array.length)*100
+        return parseInt(valor)
+    };
+
+    let percentagem = percentage(lista);
+
     return(
         <PaginaMenu>
             <div className='botoes'>
@@ -16,7 +31,7 @@ export default function Menu(){
 
             <div className='contador'>
                 <Link to={"/hoje"}>
-                    <CircularProgressbarWithChildren value={70} text={'hoje'} background={true} backgroundPadding={6} styles={{
+                    <CircularProgressbarWithChildren value={percentagem} text={'hoje'} background={true} backgroundPadding={6} styles={{
                         text: {
                         fill: '#FFFFFF',
                         fontSize: '24px',

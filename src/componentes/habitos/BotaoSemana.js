@@ -4,10 +4,28 @@ import styled from "styled-components";
 export default function BotaoSemana(props){
 
     const[selecionado,setSelecionado]=useState(false)
+    const {dia,num,setDiasSelecionados,diasSelecionados} = props
+
+    function criarLista(numero){
+        let array=[...diasSelecionados];
+
+        if (array.includes(numero)){
+            let index = array.indexOf(numero);
+            array.splice(index,1);    
+        }else{
+            array.push(numero);
+        };
+        
+        setDiasSelecionados(array);
+    }
 
     return(
-        <BotaoDia marcado={selecionado} onClick={()=>setSelecionado(!selecionado)}>
-            {props.dia[0].toUpperCase()}
+        <BotaoDia marcado={selecionado} onClick={()=>{
+            setSelecionado(!selecionado);
+            criarLista(num);
+            console.log(diasSelecionados)
+            }}>
+            {dia[0].toUpperCase()}
         </BotaoDia>
     )
 }

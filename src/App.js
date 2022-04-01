@@ -17,11 +17,12 @@ export default function App(){
 
     const [token, setToken] = useState(null)
     const [image, setImage] = useState(null)
+    const [habitosHoje, setHabitosHoje]= useState("")
     const [loading,setLoading] = useState(false)
 
     return(
         <LoadingContext.Provider value={{loading,setLoading}}>
-            <UserContext.Provider value={{token,setToken,image,setImage}}>
+            <UserContext.Provider value={{token,setToken,image,setImage,habitosHoje, setHabitosHoje}}>
                 <BrowserRouter>
                     <Routes>
                     
