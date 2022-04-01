@@ -15,8 +15,10 @@ export default function Habitos(){
     const { token,image,habitosHoje } = useContext(UserContext);
     const { loading } = useContext(loadingContext);
 
-    const[meusHabitos,setMeusHabitos] = useState([])
-    const[criarHabito,setCriarHabito] = useState(false)
+    const[meusHabitos,setMeusHabitos] = useState([]);
+    const[criarHabito,setCriarHabito] = useState(false);
+    const[diasSelecionados,setDiasSelecionados]=useState([]);
+    const[nomeDoHabito,setNomeDoHabito]=useState("");
     
     useEffect(()=>{
         const userToken = {
@@ -42,7 +44,9 @@ export default function Habitos(){
                     <h2>Meus hábitos</h2>
                     <button className="botaoAdicionarHabito" onClick={()=>setCriarHabito(true)}>+</button>
                 </div>
-                {criarHabito?<CriarHabito setCriarHabito={setCriarHabito} meusHabitos={meusHabitos} setMeusHabitos={setMeusHabitos}/>:<></>}
+                {criarHabito?<CriarHabito setCriarHabito={setCriarHabito} meusHabitos={meusHabitos} setMeusHabitos={setMeusHabitos}
+                diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} nomeDoHabito={nomeDoHabito} setNomeDoHabito={setNomeDoHabito}/>
+                :<></>}
                 <ListaHabitos>
                     {meusHabitos.length<=0?
                         <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>:

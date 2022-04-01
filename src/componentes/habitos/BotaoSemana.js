@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 export default function BotaoSemana(props){
 
-    const[selecionado,setSelecionado]=useState(false)
     const {dia,num,setDiasSelecionados,diasSelecionados} = props
+    const[selecionado,setSelecionado]=useState(diasSelecionados.includes(num))
+    
 
     function criarLista(numero){
         let array=[...diasSelecionados];

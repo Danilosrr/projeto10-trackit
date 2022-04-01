@@ -14,23 +14,24 @@ export default function MeuHabito(props){
     const { setLoading } = useContext(loadingContext);
 
     function deletarHabito(habitoId){
+        if(window.confirm(`você quer deletar o hábito "${nome}"?`)){
+            const userToken = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
 
-        const userToken = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitoId}`, userToken);
+            setLoading(true);
 
-        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitoId}`, userToken);
-        setLoading(true);
-
-        promise.then((response)=>{
-            console.log(response);
-            setLoading(false);
-            alert("habito deletado");
-        });
-        promise.catch((error)=>{
-            console.log(error.response);
-            setLoading(false);
-        });
+            promise.then((response)=>{
+                console.log(response);
+                setLoading(false);
+                alert("habito deletado");
+            });
+            promise.catch((error)=>{
+                console.log(error.response);
+                setLoading(false);
+            });
+        }
     }
 
     return(

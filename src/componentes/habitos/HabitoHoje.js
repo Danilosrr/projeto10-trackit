@@ -35,13 +35,34 @@ export default function HabitoHoje(props){
             setLoading(false);
         });
     }
+    function desmarcarHabito(habitoId){
+        
+        const userToken = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+
+        const promise = axios.post(`
+        https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitoId}/uncheck`,
+        {},userToken);
+        setLoading(true);
+
+        promise.then((response)=>{
+            console.log(response);
+            setLoading(false);
+            console.log("habito desmarcado");
+        });
+        promise.catch((error)=>{
+            console.log(error.response);
+            setLoading(false);
+        });    
+    }
 
     return(
         <DivHabitoHoje>
             <div className="informacaoHabito">
                 <h3>{nome}</h3>
             </div>
-            <Checkbox onClick={()=>concluirHabito(id)}
+            <Checkbox onClick={()=>{feito?desmarcarHabito(id):concluirHabito(id)}}
                 color={feito?'#8FC549':'#EBEBEB'} 
                 height="75px"
                 width="75px"

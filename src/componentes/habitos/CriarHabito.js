@@ -9,13 +9,10 @@ import { ThreeDots } from "react-loader-spinner";
 
 export default function CriarHabito(props){
 
-    const{setCriarHabito}=props
+    const{setCriarHabito,diasSelecionados,setDiasSelecionados,nomeDoHabito,setNomeDoHabito}=props
 
     const { token } = useContext(UserContext);
     const { loading, setLoading } = useContext(loadingContext);
-
-    const[diasSelecionados,setDiasSelecionados]=useState([])
-    const[nomeDoHabito,setNomeDoHabito]=useState("")
 
     function enviarHabito(){
 
@@ -36,11 +33,15 @@ export default function CriarHabito(props){
 
         promise.then((response)=>{
             console.log(response);
+            setNomeDoHabito("");
+            setDiasSelecionados([]);
             setLoading(false);
             setCriarHabito(false);
         });
         promise.catch((error)=>{
             console.log(error.response);
+            setNomeDoHabito("");
+            setDiasSelecionados([]);
             setLoading(false);
             setCriarHabito(false);
         });
