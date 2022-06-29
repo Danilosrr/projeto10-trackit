@@ -7,6 +7,7 @@ import Login from "./componentes/login/Login"
 import Cadastro from "./componentes/login/Cadastro";
 import Hoje from "./componentes/habitos/Hoje";
 import Habitos from "./componentes/habitos/Habitos";
+import Historico from "./componentes/historico/Historico";
 
 import "./assets/css/reset.css";
 import "./assets/css/fonts.css";
@@ -25,11 +26,12 @@ export default function App(){
             <UserContext.Provider value={{token,setToken,image,setImage,habitosHoje, setHabitosHoje}}>
                 <BrowserRouter>
                     <Routes>
-                    
+
                         <Route path="/" element={<Login/>}/>
                         <Route path="/cadastro" element={<Cadastro/>}/>
                         <Route path="/hoje" element={<Hoje/>}/>
                         <Route path="/habitos" element={<Habitos/>}/>
+                        <Route path="/historico" element={<Historico/>}/>
                         
                     </Routes>
                 </BrowserRouter>
